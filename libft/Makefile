@@ -49,7 +49,7 @@ $(NAME): $(OBJ) $(DEPS)
 					@$(LIB) $(NAME) $(OBJ)
 					@ranlib $(NAME)
 					@/bin/echo -ne "                                  \r"
-					@echo "$(GREEN)> BUILDING LIBFT              [✓]$(END)"
+					@echo "$(GREEN)> BUILDING LIBFT			[✓]$(END)"
 
 
 
