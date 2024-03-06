@@ -22,22 +22,15 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) 
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) 
-	@echo "$(GREEN)COMPILING PIPEX	 		 [✓]$(END)"
-	@/bin/echo -e "\nBuild finished"
+	@/bin/echo -ne "                                   \r"
+	@echo "$(GREEN)> BUILDING PIPEX              [✓]$(END)"
 
 $(LIBFT):
-	@echo "$(PURPLE)------------ [ PIPEX ] -------------" 
 	@make -s -C libft/
 	@cp libft/libft.a .
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	@/bin/echo -ne "$(YELLOW)COMPILING PIPEX			 [\\]\r$(END)"
-	@sleep 0.05
-	@/bin/echo -ne "$(YELLOW)COMPILING PIPEX			 [|]\r$(END)"
-	@sleep 0.05
-	@/bin/echo -ne "$(YELLOW)COMPILING PIPEX			 [/]\r$(END)"
-	@sleep 0.05
-	@/bin/echo -ne "$(YELLOW)COMPILING PIPEX			 [-]\r$(END)"
+	@/bin/echo -ne "$(YELLOW)> BUILDING $<               \r$(END)"
 	@$(CC) $(CCFLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
@@ -45,7 +38,7 @@ $(OBJ_DIR):
 
 clean:
 	@make clean -s -C libft/
-	@$(RM) $(OBJ) $(BONUSOBJ)
+	@$(RM) $(OBJ)
 	@$(RM) $(OBJ_DIR)
 
 fclean: clean
