@@ -12,7 +12,7 @@
 
 #include "pipe.h"
 
-int	here_doc(char *temp_name, char *limiter)
+void	here_doc(char *limiter)
 {
 	int		p[2];
 	char	*s;
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	arg_check(argc, argv);
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
-		here_doc(TEMP_NAME, argv[2]);
+		here_doc(argv[2]);
 		pipe_cmds(argc - 3, env_paths, argv + 3, envp);
 	}
 	else

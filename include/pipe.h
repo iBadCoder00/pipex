@@ -14,7 +14,6 @@
 # define PIPE_H
 # define READ 0
 # define WRITE 1
-# define TEMP_NAME ".hdoc_temp"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>

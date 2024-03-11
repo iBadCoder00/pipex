@@ -49,7 +49,7 @@ $(LIBFT):
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 			@printf "$(YELLOW)> BUILDING $<               \r$(END)"
-			@$(CC) $(CCFLAGS) -I $(INC_DIR) -c -o $@ $<
+			@$(CC) $(CFLAGS) -I $(INC_DIR) -c -o $@ $<
 
 $(OBJ_DIR):
 			@mkdir obj
