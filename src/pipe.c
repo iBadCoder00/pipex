@@ -18,11 +18,9 @@ void	arg_check(int argc, char **argv)
 {
 	int	infile;
 
+	if (argc != 5)
+		ft_perror(USAGE);
 	infile = open(argv[1], O_RDONLY);
-	if (argc < 5)
-		ft_perror(
-			"Usage: ./pipex infile <command 1>,"
-			"<command 2>, ... <command n> outfile");
 	if (infile < 0)
 		ft_perror(ft_strjoin(BAD_FILE, argv[1]));
 	close(infile);
@@ -47,11 +45,14 @@ void	create_child(char *cmd_path, char **cmd, char **envp)
 		dup2(p[WRITE], STDOUT_FILENO);
 		close(p[WRITE]);
 		if (execve(cmd_path, cmd, envp) < 0)
-			ft_perror(NO_EXP_CMD);
+			ft_perror(ft_strjoin(BAD_CMD, cmd[0]));
 	}
-	dup2(p[READ], STDIN_FILENO);
-	close(p[READ]);
-	close(p[WRITE]);
+	else
+	{
+		dup2(p[READ], STDIN_FILENO);
+		close(p[READ]);
+		close(p[WRITE]);
+	}
 }
 
 /*Driver function that lets the child processes execute every command and pass
@@ -65,16 +66,17 @@ void	pipe_cmds(int argc, char **env_paths, char **argv, char **envp)
 	char	**cmd;
 	char	*cmd_path;
 
-	i = 2;
+	i = 0;
 	while (i < argc - 1)
 	{
 		cmd_path = cmd_check(argv[i], env_paths);
 		cmd = ft_split(argv[i], ' ');
 		if (i == argc - 2)
 		{
-			fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+			fd_out = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0755);
 			dup2(fd_out, STDOUT_FILENO);
-			execve(cmd_path, cmd, NULL);
+			if (execve(cmd_path, cmd, NULL) < 0)
+				ft_perror(ft_strjoin(BAD_CMD, cmd[0]));
 			close (fd_out);
 		}
 		else
@@ -87,8 +89,7 @@ void	pipe_cmds(int argc, char **env_paths, char **argv, char **envp)
 }
 
 /*Tries to find the executable path for the given command.
-If a suitable path is not found, the program will exit 
-and display an error message with the command that was not found*/
+If a suitable path is not found, the program will return null.*/
 char	*cmd_check(char *argv, char **path)
 {
 	int		i;
@@ -96,6 +97,12 @@ char	*cmd_check(char *argv, char **path)
 	char	*cmd_path;
 
 	cmd = ft_split(argv, ' ');
+	if (access(cmd[0], F_OK) == 0)
+	{
+		cmd_path = ft_strdup(cmd[0]);
+		free_tab(cmd);
+		return (cmd_path);
+	}
 	i = 0;
 	while (path[i])
 	{
@@ -108,7 +115,7 @@ char	*cmd_check(char *argv, char **path)
 		free(cmd_path);
 		i++;
 	}
-	ft_perror(ft_strjoin(BAD_CMD, cmd[0]));
+	free_tab(cmd);
 	return (0);
 }
 

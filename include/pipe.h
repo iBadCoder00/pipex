@@ -14,6 +14,7 @@
 # define PIPE_H
 # define READ 0
 # define WRITE 1
+# define TEMP_NAME ".hdoc_temp"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -21,7 +22,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "../libft/include/libft.h"
-# include "error.h"
+# include "error_msg.h"
 
 int		ft_perror(char *error_message);
 char	**get_envpaths(char **envp);

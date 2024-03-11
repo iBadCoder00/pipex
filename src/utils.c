@@ -16,7 +16,6 @@
  displays it into stderr and exits on EXIT_FAILURE*/
 int	ft_perror(char *error_message)
 {
-	
 	write(2, error_message, ft_strlen(error_message));
 	write(2, "\n", 1);
 	exit(1);

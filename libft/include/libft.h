@@ -72,5 +72,5 @@ void	*ft_memset(void *s, int c, size_t n);
 
 /*Non legacy functions*/
 int		ft_printf(const char *s, ...);
-
+char	*get_next_line(int fd);
 #endif
