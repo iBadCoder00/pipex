@@ -35,7 +35,7 @@ all: $(NAME)
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(LIBFT) $(BONUS_OBJ)
-			@$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBS) -o $(NAME_BONUS)
+			@$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBS) -o $(NAME_BONUS) -fsanitize=address
 			@printf "                                   \r"
 			@printf "$(GREEN)> BUILDING PIPEX_BONUS		[✓]\n$(END)"
 

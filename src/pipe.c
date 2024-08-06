@@ -26,19 +26,16 @@ void	arg_check(int argc, char **argv)
 	close(infile);
 }
 
-/*Creates a child that will read from the 
-open pipe that the parent process left open 
-and will dump its command output into the writing end of the pipe*/
 void	create_child(char *cmd_path, char **cmd, char **envp)
 {
 	int	p[2];
 	int	pid;
 
 	if (pipe(p) < 0)
-		ft_perror(NO_EXP_CMD);
+		ft_perror(BAD_PIPE);
 	pid = fork();
 	if (pid < 0)
-		ft_perror(NO_EXP_CMD);
+		ft_perror(BAD_FORK);
 	if (pid == 0)
 	{
 		close(p[READ]);

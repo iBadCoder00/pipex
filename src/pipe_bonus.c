@@ -132,12 +132,18 @@ char	**get_envpaths(char **envp)
 	char	**env_paths;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	if (envp[i] == NULL)
-		ft_perror(BAD_PATH);
-	env_paths = ft_split(envp[i] + 5, ':');
-	i = 0;
+	if (!envp[0])
+	{
+		env_paths = malloc(sizeof(char *));
+		env_paths[0] = ft_strdup("");
+	}
+	else
+	{
+		while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+			i++;
+		env_paths = ft_split(envp[i] + 5, ':');
+		i = 0;
+	}
 	while (env_paths[i])
 	{
 		env_paths[i] = ft_strapp(env_paths[i], "/");

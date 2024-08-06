@@ -12,16 +12,13 @@
 
 #include "pipe.h"
 
-void	here_doc(char *limiter)
+void	here_doc(char *limiter, size_t lim_len)
 {
 	int		p[2];
 	char	*s;
-	size_t	lim_len;
 
-	pipe(p);
-	lim_len = ft_strlen(limiter);
-	if (!lim_len)
-		limiter = ft_strdup("\n");
+	if (pipe(p) < 0)
+		ft_perror(BAD_PIPE);
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -44,13 +41,17 @@ void	here_doc(char *limiter)
 int	main(int argc, char **argv, char **envp)
 {
 	int		fd_in;
+	size_t	lim_len;
 	char	**env_paths;
 
 	env_paths = get_envpaths(envp);
 	arg_check(argc, argv);
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
-		here_doc(argv[2]);
+		lim_len = ft_strlen(argv[2]);
+		if (!lim_len)
+			argv[2] = ft_strdup("\n");
+		here_doc(argv[2], lim_len);
 		pipe_cmds(argc - 3, env_paths, argv + 3, envp);
 	}
 	else

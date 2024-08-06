@@ -17,6 +17,8 @@ int	main(int argc, char **argv, char **envp)
 	int		fd_in;
 	char	**env_paths;
 
+	if (!envp[0])
+		ft_perror(BAD_PATH);
 	env_paths = get_envpaths(envp);
 	arg_check(argc, argv);
 	fd_in = open(argv[1], O_RDONLY);
