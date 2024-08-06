@@ -25,18 +25,15 @@ LEGACY_SRC	= ft_memset.c ft_bzero.c ft_strlen.c\
 			  ft_strjoin.c ft_strtrim.c ft_strmapi.c ft_itoa.c ft_split.c ft_striteri.c\
 			  ft_lstnew.c ft_lstadd_front.c ft_lstsize.c\
 			  ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c\
-			  ft_lstclear.c ft_lstiter.c ft_lstmap.c 
-PRINTF_SRC  = exlibft.c format_utils.c ft_printaddr.c\
-			  ft_printchar.c ft_printf.c ft_printhex.c ft_printint.c ft_printstr.c ft_printuint.c utils.c
+			  ft_lstclear.c ft_lstiter.c ft_lstmap.c
 GNL_SRC		= get_next_line.c get_next_line_utils.c
-SRC_FILE	= $(addprefix $(LEGACY_DIR)/, $(LEGACY_SRC)) $(addprefix $(PRINTF_DIR)/, $(PRINTF_SRC))\
+SRC_FILE	= $(addprefix $(LEGACY_DIR)/, $(LEGACY_SRC)) \
 			  $(addprefix $(GNL_DIR)/, $(GNL_SRC))
 SRC			= $(addprefix $(SRC_DIR)/, $(SRC_FILE))
 OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC_FILE:.c=.o))
 
 #	DIRECTORIES
 SRC_DIR 	= src
-PRINTF_DIR 	= ft_printf
 LEGACY_DIR	= legacy
 GNL_DIR		= gnl
 OBJ_DIR		= obj
@@ -64,7 +61,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR): 
 			@printf '\033c'
-			@mkdir -p $(OBJ_DIR)/$(PRINTF_DIR)
 			@mkdir -p $(OBJ_DIR)/$(LEGACY_DIR)
 				@mkdir -p $(OBJ_DIR)/$(GNL_DIR)
 clean:
